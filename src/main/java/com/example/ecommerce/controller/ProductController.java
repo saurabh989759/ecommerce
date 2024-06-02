@@ -2,12 +2,10 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.dto.ErrorDto;
 import com.example.ecommerce.exceptions.ProductNotFoundExceptions;
-import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,11 +33,11 @@ public class ProductController {
        return res;
    }
    @GetMapping("/products")
-    public void getAllProducts(){
-       productService.getAllProducts();
+    public List<Product> getAllProducts(){
+     return   productService.getAllProducts();
    }
-   @GetMapping("products/category")
-     public ResponseEntity<List<String>> getAllProductsByCategory(){
+   @GetMapping("/category")
+     public ResponseEntity<List<String>> getAllCategory(){
      //  ResponseEntity
        List<String> list = productService.getAllCategories();
        ResponseEntity<List<String>> response = new ResponseEntity<>(
@@ -47,10 +45,9 @@ public class ProductController {
        );
        return response;
    }
-   @DeleteMapping("/products/{id}")
-    public ResponseEntity<ErrorDto> deleteProduct(@PathVariable("id") Long productId) throws ProductNotFoundExceptions {
-       productService.deleteProduct(productId);
-       return null;
+   @DeleteMapping("/product/{id}")
+    public Product deleteProduct(@PathVariable("id") Long productId)  {
+       return productService.deleteProduct(productId);
    }
 
    //categories
@@ -62,7 +59,7 @@ public class ProductController {
       );
       return res ;
     }
-    @PostMapping("/products/{id}")
+    @PostMapping("/product/{id}")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product , @PathVariable("id") Long productId) throws ProductNotFoundExceptions {
            Product prod = productService.updateProduct(product, productId);
            return ResponseEntity.ok(prod);

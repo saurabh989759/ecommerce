@@ -11,11 +11,16 @@ public interface ProductRepositery extends JpaRepository<Product , Long> {
      Product save(Product product);
      //to insert
     //Product Product(String title);
+    Product findById(long id);
     Product findByTitle(String name);
+
+    @Query(value = "select * from product" , nativeQuery = true)
+    List<Product> findAllProducts();
     //select * from product where title = {}
     Product findByDescription(String description);
 
-    Product deleteProductById(Long id);
+    @Query(value = "delete  from product where product.id =: id" , nativeQuery = true)
+    Product deleteProductById(@Param("id") Long id);
     //how to implement the HQL query
     @Query("select p from Product p where p.category.id = :categoryId")
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId);

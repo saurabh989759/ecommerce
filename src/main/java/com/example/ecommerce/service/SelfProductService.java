@@ -31,13 +31,16 @@ public class SelfProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-
-        return List.of();
+        return productRepositery.findAllProducts();
     }
 
     @Override
     public Product createProduct(Product product) {
+        if (product == null || product.getCategory().getTitle() == null) {
+            throw new IllegalArgumentException("Product and its category must not be null");
+        }
         Category cat = categoryRepository.findByTitle(product.getCategory().getTitle());
+        System.out.println(cat);
         if(cat == null){
             Category newCat = new Category();
             newCat.setTitle(product.getCategory().getTitle());
@@ -47,18 +50,32 @@ public class SelfProductService implements ProductService {
             product.setCategory(cat);
         }
          Product savedProduct = productRepositery.save(product);
+        //System.out.println(savedProduct);
         return savedProduct;
     }
 
     @Override
     public Product updateProduct(Product product, Long productId)  {
-        return null;
+        Optional<Product> p = productRepositery.findById(productId);
+        if(p.isPresent()){
+          Product oldProduct = p.get();
+          oldProduct.setTitle(product.getTitle());
+          return productRepositery.save(oldProduct);
+        }
+        else {
+            throw new IllegalArgumentException("Product not found");
+        }
     }
 
     @Override
     public Product deleteProduct(Long productId) {
-
-        return null;
+        Optional<Product> p = productRepositery.findById(productId);
+        if(p.isPresent()){
+            return productRepositery.deleteProductById(productId);
+        }
+        else {
+            throw new IllegalArgumentException("Product not found");
+        }
     }
 
     @Override
@@ -69,6 +86,6 @@ public class SelfProductService implements ProductService {
 
     @Override
     public List<String> getAllCategories() {
-        return List.of();
+        return categoryRepository.findAllTitles();
     }
 }

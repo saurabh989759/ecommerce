@@ -34,9 +34,9 @@ public class FakeStoreProductDto {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +
-                ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

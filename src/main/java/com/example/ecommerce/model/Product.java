@@ -1,5 +1,8 @@
 package com.example.ecommerce.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +12,27 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-    private Long id;
-    public String title ;
-    public String description ;
-    public Double price;
-    public String imageUrl;
+@Entity
+public class Product extends BaseModel{
+    private String title ;
+    private String description ;
+    private Double price;
+    private String imageUrl;
+    @ManyToOne
     private Category category ;
+    private int weight ;
+    private int height ;
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", category=" + category +
+                ", weight=" + weight +
+                ", height=" + height +
+                '}';
+    }
 }

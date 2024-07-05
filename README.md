@@ -1,6 +1,4 @@
-Certainly! Below is a comprehensive `README.md` template for your GitHub repository. This template provides an overview of the project, its architecture, functionalities, deployment, and tools used.
 
----
 
 # E-Commerce Platform Microservices Architecture
 
